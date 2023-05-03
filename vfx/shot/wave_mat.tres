@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://cjxq2ng3fqw7s"]
+
+[ext_resource type="Shader" path="res://vfx/shot/wave.gdshader" id="1_0oqhg"]
+
+[sub_resource type="Curve" id="Curve_ly6w1"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.409168, 0.727273), 0.0, 0.0, 0, 0, Vector2(0.529711, 0), 0.0, 0.0, 0, 0, Vector2(0.757216, 1), 3.38182, 0.0277653, 0, 0, Vector2(0.911715, 0), -8.31363, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_l48ln"]
+texture_mode = 1
+curve = SubResource("Curve_ly6w1")
+
+[resource]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_0oqhg")
+shader_parameter/fade = 1.0
+shader_parameter/wave_offset = 0.0
+shader_parameter/base_color = Color(1, 0.611765, 0.984314, 1)
+shader_parameter/energy = 2.5
+shader_parameter/waves_sample = SubResource("CurveTexture_l48ln")

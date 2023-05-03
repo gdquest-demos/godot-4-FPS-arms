@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://assets/materials/arms_color.gdshader" id="1_vs23t"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_vs23t")
+shader_parameter/skin_color = Color(0.482353, 0.309804, 0.227451, 1)
+shader_parameter/extremity_color = Color(0.952941, 0.603922, 0.462745, 1)
+shader_parameter/nails_color = Color(0.505915, 0.347151, 0.26783, 1)

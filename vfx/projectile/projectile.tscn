@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl15s41t61tkv"]
+
+[ext_resource type="Material" uid="uid://becea516ry5e" path="res://vfx/projectile/laser_mat.tres" id="1_uvqje"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_36blc"]
+size = Vector2(0.15, 2)
+
+[node name="Laser" type="MeshInstance3D"]
+material_override = ExtResource("1_uvqje")
+mesh = SubResource("QuadMesh_36blc")

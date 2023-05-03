@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://7v62ees4irsu"]
+
+[ext_resource type="Script" path="res://resources/weapon_data.gd" id="1_36itb"]
+
+[resource]
+script = ExtResource("1_36itb")
+weapon_name = "Laser Gun"
+max_ammo = 5

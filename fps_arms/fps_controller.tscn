@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://don4817u8figv"]
+
+[ext_resource type="Script" path="res://fps_arms/fps_controller.gd" id="1_tnmvy"]
+[ext_resource type="PackedScene" uid="uid://b8i8vajkg00s0" path="res://fps_arms/arms_view.tscn" id="1_xwcgv"]
+[ext_resource type="AudioStream" uid="uid://ckv6g1ihj2bho" path="res://assets/sounds/45_Landing_01.wav" id="2_2f184"]
+[ext_resource type="AudioStream" uid="uid://djo87ut6otlj1" path="res://assets/sounds/footstep.mp3" id="3_l51ps"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rprq0"]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_j18qm"]
+
+[node name="FpsController" type="CharacterBody3D" groups=["player"]]
+script = ExtResource("1_tnmvy")
+
+[node name="FootStep" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_l51ps")
+volume_db = -20.0
+max_polyphony = 4
+
+[node name="Landing" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_2f184")
+volume_db = -10.0
+max_polyphony = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_rprq0")
+
+[node name="Neck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Neck"]
+unique_name_in_owner = true
+cull_mask = 1048573
+current = true
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Neck/Camera3D"]
+remote_path = NodePath("../../../ArmsView/SubViewport/Root")
+
+[node name="ArmsView" parent="." instance=ExtResource("1_xwcgv")]
+unique_name_in_owner = true
+
+[node name="Root" parent="ArmsView/SubViewport" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="simple_gun" parent="ArmsView/SubViewport/Root/Arms/fps_arms/rig/Skeleton3D" index="0"]
+transform = Transform3D(0.999925, -0.0122354, -2.06754e-07, 0.0122355, 0.999925, -2.5332e-07, 2.25775e-07, 1.51226e-07, 1, -0.160347, 0.107148, 0.604451)
+
+[node name="AnimationTree" parent="ArmsView" index="1"]
+parameters/MainState/playback = SubResource("AnimationNodeStateMachinePlayback_j18qm")
+
+[editable path="ArmsView"]
+[editable path="ArmsView/SubViewport/Root/Arms/fps_arms"]

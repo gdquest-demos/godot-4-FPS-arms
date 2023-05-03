@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://6flrdeusbusq"]
+
+[ext_resource type="PackedScene" uid="uid://m7nhya8n1jss" path="res://assets/pickup_box.glb" id="1_phn3w"]
+[ext_resource type="Texture2D" uid="uid://dphgie4ivylv4" path="res://assets/pickup_box_textures/ammo_pickup_diffuse.png" id="2_hmx1w"]
+[ext_resource type="Texture2D" uid="uid://dsgxd325d2tnw" path="res://assets/pickup_box_textures/ammo_pickup_normal.png" id="3_bn26j"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nya8y"]
+albedo_texture = ExtResource("2_hmx1w")
+roughness = 0.6
+normal_enabled = true
+normal_texture = ExtResource("3_bn26j")
+
+[node name="AmmoPickup" type="Node3D"]
+
+[node name="pickup_box" parent="." instance=ExtResource("1_phn3w")]
+
+[node name="ammo_pickup_box" parent="pickup_box" index="0"]
+material_override = SubResource("StandardMaterial3D_nya8y")
+
+[editable path="pickup_box"]

@@ -1,0 +1,194 @@
+[gd_scene load_steps=22 format=3 uid="uid://c1ruobme5mf7l"]
+
+[ext_resource type="Script" path="res://main/main.gd" id="1_3yjrn"]
+[ext_resource type="Script" path="res://main/shoot_manager.gd" id="1_w010k"]
+[ext_resource type="PackedScene" uid="uid://don4817u8figv" path="res://fps_arms/fps_controller.tscn" id="1_x3s0a"]
+[ext_resource type="Script" path="res://main/pickup_manager.gd" id="2_hl8mw"]
+[ext_resource type="PackedScene" uid="uid://cg5ib85s40uk0" path="res://vfx/impact/impact.tscn" id="3_7qovb"]
+[ext_resource type="AudioStream" uid="uid://lb01bxc4avpb" path="res://assets/sounds/laser_gun.mp3" id="3_ah1b3"]
+[ext_resource type="PackedScene" uid="uid://b4cqtavitv24y" path="res://impact/impact_decal.tscn" id="3_fthyo"]
+[ext_resource type="Texture2D" uid="uid://cn1xv8gcadsl3" path="res://assets/crosshair.png" id="3_stf78"]
+[ext_resource type="PackedScene" uid="uid://beieaq5q0p5sf" path="res://vfx/shot/shot.tscn" id="4_y6yno"]
+[ext_resource type="Texture2D" uid="uid://cpxvl0tn5ve4u" path="res://assets/grid.png" id="8_wf8fe"]
+[ext_resource type="PackedScene" uid="uid://bl15s41t61tkv" path="res://vfx/projectile/projectile.tscn" id="9_7cbri"]
+[ext_resource type="Script" path="res://main/impact_manager.gd" id="9_8y1m4"]
+[ext_resource type="Script" path="res://UI/crosshair.gd" id="13_dau3n"]
+[ext_resource type="PackedScene" uid="uid://u8k1yuofjipe" path="res://pickup/pickup.tscn" id="13_kwddc"]
+[ext_resource type="PackedScene" uid="uid://c5negq8jua51d" path="res://UI/AmmoCounter/ammo_counter.tscn" id="14_oexx2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_epfwl"]
+
+[sub_resource type="Sky" id="Sky_wka67"]
+sky_material = SubResource("ProceduralSkyMaterial_epfwl")
+
+[sub_resource type="Environment" id="Environment_10hr7"]
+background_mode = 2
+sky = SubResource("Sky_wka67")
+ambient_light_color = Color(0.5, 0.5, 0.5, 1)
+ambient_light_sky_contribution = 0.6
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_31dii"]
+albedo_texture = ExtResource("8_wf8fe")
+roughness = 0.8
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv1_triplanar_sharpness = 10.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4u7e7"]
+size = Vector2(1000, 1000)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tikpr"]
+
+[node name="main" type="Node"]
+script = ExtResource("1_3yjrn")
+
+[node name="PickupManager" type="Node" parent="."]
+script = ExtResource("2_hl8mw")
+
+[node name="World3D" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World3D"]
+environment = SubResource("Environment_10hr7")
+
+[node name="ShootManager" type="Node3D" parent="World3D"]
+script = ExtResource("1_w010k")
+impact_decal_scene = ExtResource("3_fthyo")
+impact_scene = ExtResource("3_7qovb")
+shot_scene = ExtResource("4_y6yno")
+projectile_scene = ExtResource("9_7cbri")
+
+[node name="LaserSound" type="AudioStreamPlayer" parent="World3D/ShootManager"]
+unique_name_in_owner = true
+stream = ExtResource("3_ah1b3")
+volume_db = -10.0
+max_polyphony = 4
+
+[node name="ImpactManager" type="Node3D" parent="World3D"]
+unique_name_in_owner = true
+script = ExtResource("9_8y1m4")
+
+[node name="FpsController" parent="World3D" instance=ExtResource("1_x3s0a")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 3)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World3D"]
+transform = Transform3D(0.707106, -0.664463, 0.241845, 0, 0.34202, 0.939692, -0.707106, -0.664463, 0.241845, 0, 0, 0)
+light_energy = 1.2
+shadow_enabled = true
+directional_shadow_max_distance = 20.0
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="World3D"]
+material_override = SubResource("StandardMaterial3D_31dii")
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0.5)
+size = Vector3(6, 2, 5)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -1)
+size = Vector3(2, 2, 2)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3.75, -4)
+size = Vector3(2, 0.5, 4)
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 3.75, -7)
+size = Vector3(7, 0.5, 2)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0.5)
+size = Vector3(6, 4, 5)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, -8)
+size = Vector3(2, 4, 4)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, -9)
+size = Vector3(5, 2, 2)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, -7)
+size = Vector3(2, 4, 2)
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 2.5)
+polygon = PackedVector2Array(-0.5, 0, 2.5, 2, 2.5, 0)
+depth = 2.0
+
+[node name="CSGPolygon3D4" type="CSGPolygon3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -12.5)
+polygon = PackedVector2Array(-0.5, 0, 2.5, 2, 2.5, 0)
+depth = 2.0
+
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, 2)
+polygon = PackedVector2Array(-0.5, 0, 2.5, 2, 2.5, 0)
+depth = 2.0
+
+[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="World3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, -8)
+polygon = PackedVector2Array(-0.5, 0, 2.5, 2, 2.5, 0)
+depth = 2.0
+
+[node name="Floor" type="StaticBody3D" parent="World3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World3D/Floor"]
+material_override = SubResource("StandardMaterial3D_31dii")
+mesh = SubResource("PlaneMesh_4u7e7")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World3D/Floor"]
+shape = SubResource("WorldBoundaryShape3D_tikpr")
+
+[node name="AmmoPickup" parent="World3D" instance=ExtResource("13_kwddc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 4, 1)
+
+[node name="HealthPickup2" parent="World3D" instance=ExtResource("13_kwddc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 0.5)
+pickup_type = "health"
+
+[node name="AmmoPickup2" parent="World3D" instance=ExtResource("13_kwddc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -5)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CrossHair" type="TextureRect" parent="CanvasLayer/UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.5
+offset_top = -9.0
+offset_right = 8.5
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_stf78")
+script = ExtResource("13_dau3n")
+
+[node name="AmmoCounter" parent="CanvasLayer/UI" instance=ExtResource("14_oexx2")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -72.0
+offset_right = 46.0
+offset_bottom = -32.0
+grow_vertical = 0

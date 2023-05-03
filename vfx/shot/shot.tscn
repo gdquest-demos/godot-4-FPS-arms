@@ -1,0 +1,69 @@
+[gd_scene load_steps=13 format=3 uid="uid://beieaq5q0p5sf"]
+
+[ext_resource type="Script" path="res://vfx/shot/shot.gd" id="1_4d58q"]
+[ext_resource type="Material" uid="uid://cjxq2ng3fqw7s" path="res://vfx/shot/wave_mat.tres" id="2_xancc"]
+[ext_resource type="Material" uid="uid://bnwil6og0lp2x" path="res://vfx/shot/short_particles_mat.tres" id="3_28iww"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_72bg8"]
+size = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_k108d"]
+offsets = PackedFloat32Array(0, 0.179775, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oljs5"]
+gradient = SubResource("Gradient_k108d")
+
+[sub_resource type="Curve" id="Curve_ac3qu"]
+max_value = 10.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.986577, 4.36364), 7.96792, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_hbhun"]
+curve = SubResource("Curve_ac3qu")
+
+[sub_resource type="Curve" id="Curve_id6qs"]
+_data = [Vector2(0.794567, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_00uc3"]
+curve = SubResource("Curve_id6qs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n4akj"]
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 1.0
+damping_min = 0.5
+damping_max = 1.0
+damping_curve = SubResource("CurveTexture_hbhun")
+scale_min = 0.1
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_00uc3")
+color_ramp = SubResource("GradientTexture1D_oljs5")
+turbulence_noise_strength = 20.0
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_hv0hb"]
+size = Vector2(0.1, 0.1)
+
+[node name="Shot" type="Node3D"]
+script = ExtResource("1_4d58q")
+
+[node name="Wave" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = ExtResource("2_xancc")
+cast_shadow = 0
+mesh = SubResource("QuadMesh_72bg8")
+
+[node name="Particles" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+material_override = ExtResource("3_28iww")
+emitting = false
+amount = 4
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_n4akj")
+draw_pass_1 = SubResource("QuadMesh_hv0hb")
