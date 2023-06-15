@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmmcg88wg7xxy"]
+
+[ext_resource type="Script" path="res://target/target.gd" id="1_6jap5"]
+[ext_resource type="PackedScene" uid="uid://ckgkqnl6bxl87" path="res://target/target.glb" id="3_4l7ax"]
+[ext_resource type="PackedScene" uid="uid://d2d1fk2ymokbh" path="res://hit_zone/hit_zone.tscn" id="3_i8kex"]
+[ext_resource type="Material" uid="uid://b4fbrjiauu7ij" path="res://assets/outline_mat.tres" id="3_xablk"]
+[ext_resource type="AudioStream" uid="uid://bmx3jr34xno7i" path="res://assets/sounds/phaserUp7.ogg" id="4_rbo4c"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7o21f"]
+height = 0.1
+
+[node name="Target" type="Node3D"]
+script = ExtResource("1_6jap5")
+
+[node name="Visual" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1.91069e-15, -4.37114e-08, -1, -1, -4.37114e-08, 0, -4.37114e-08, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="target" parent="Visual" instance=ExtResource("3_4l7ax")]
+transform = Transform3D(-2.18557e-08, -0.5, -2.18557e-08, 0, -2.18557e-08, 0.5, -0.5, 2.18557e-08, 9.55343e-16, 0, 0, 0)
+
+[node name="Cylinder" parent="Visual/target" index="0"]
+material_overlay = ExtResource("3_xablk")
+
+[node name="HitZone" parent="." instance=ExtResource("3_i8kex")]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitZone"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_7o21f")
+
+[node name="ImpactSound" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("4_rbo4c")
+volume_db = -20.0
+max_polyphony = 2
+
+[editable path="Visual/target"]

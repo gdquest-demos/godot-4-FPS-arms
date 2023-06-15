@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Fps Arms Godot 4"
+config/name="Fps Armss"
 run/main_scene="res://main/main.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://arm_icon.png"
 
 [display]
 

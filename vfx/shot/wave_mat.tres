@@ -16,6 +16,6 @@ render_priority = 0
 shader = ExtResource("1_0oqhg")
 shader_parameter/fade = 1.0
 shader_parameter/wave_offset = 0.0
-shader_parameter/base_color = Color(1, 0.611765, 0.984314, 1)
+shader_parameter/base_color = Color(0.968627, 0.733333, 0, 1)
 shader_parameter/energy = 2.5
 shader_parameter/waves_sample = SubResource("CurveTexture_l48ln")

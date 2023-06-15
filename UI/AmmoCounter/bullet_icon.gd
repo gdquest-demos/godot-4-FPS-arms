@@ -1,4 +1,4 @@
-extends TextureRect
+extends ColorRect
 
 var tween : Tween = null
 

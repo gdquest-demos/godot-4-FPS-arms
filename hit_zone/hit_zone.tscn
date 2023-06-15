@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2d1fk2ymokbh"]
+
+[ext_resource type="Script" path="res://hit_zone/hit_zone.gd" id="1_an7s6"]
+[ext_resource type="Resource" uid="uid://c4lm8ngbupt2v" path="res://resources/main_focus_manager.tres" id="2_emwwx"]
+
+[node name="HitZone" type="Area3D"]
+script = ExtResource("1_an7s6")
+main_focus_manager = ExtResource("2_emwwx")

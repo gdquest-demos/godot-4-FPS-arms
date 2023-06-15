@@ -12,6 +12,7 @@
 size = Vector3(0.4, 0.2, 0.4)
 texture_albedo = ExtResource("1_fi453")
 texture_normal = ExtResource("2_u1pba")
+modulate = Color(1, 1, 1, 0.392157)
 script = ExtResource("3_g8djy")
 diffuse = Array[Texture]([ExtResource("1_fi453"), ExtResource("4_2l6e2"), ExtResource("5_660st")])
 normal = Array[Texture]([ExtResource("2_u1pba"), ExtResource("6_mbav1"), ExtResource("7_5y5ge")])

@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://don4817u8figv"]
+[gd_scene load_steps=9 format=3 uid="uid://don4817u8figv"]
 
 [ext_resource type="Script" path="res://fps_arms/fps_controller.gd" id="1_tnmvy"]
 [ext_resource type="PackedScene" uid="uid://b8i8vajkg00s0" path="res://fps_arms/arms_view.tscn" id="1_xwcgv"]
-[ext_resource type="AudioStream" uid="uid://ckv6g1ihj2bho" path="res://assets/sounds/45_Landing_01.wav" id="2_2f184"]
-[ext_resource type="AudioStream" uid="uid://djo87ut6otlj1" path="res://assets/sounds/footstep.mp3" id="3_l51ps"]
+[ext_resource type="AudioStream" uid="uid://8kk4ubk5hq4c" path="res://assets/sounds/footstep_wood_000.ogg" id="2_0dxr0"]
+[ext_resource type="Resource" uid="uid://c4lm8ngbupt2v" path="res://resources/main_focus_manager.tres" id="2_wix1s"]
+[ext_resource type="AudioStream" uid="uid://ditbnksbcilw2" path="res://assets/sounds/footstep_wood_001.ogg" id="3_22f4o"]
+[ext_resource type="AudioStream" uid="uid://bxix0mwm07si6" path="res://assets/sounds/pepSound2.ogg" id="3_tvps0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rprq0"]
 
@@ -11,18 +13,24 @@
 
 [node name="FpsController" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_tnmvy")
+main_focus_manager = ExtResource("2_wix1s")
 
 [node name="FootStep" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
-stream = ExtResource("3_l51ps")
-volume_db = -20.0
+stream = ExtResource("2_0dxr0")
+volume_db = -10.0
+max_polyphony = 4
+
+[node name="NoAmmo" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_tvps0")
+volume_db = -10.0
 max_polyphony = 4
 
 [node name="Landing" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
-stream = ExtResource("2_2f184")
-volume_db = -10.0
-max_polyphony = 4
+stream = ExtResource("3_22f4o")
+max_polyphony = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -39,17 +47,27 @@ current = true
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="Neck/Camera3D"]
 remote_path = NodePath("../../../ArmsView/SubViewport/Root")
 
+[node name="FocusCast" type="RayCast3D" parent="Neck/Camera3D"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -20)
+collide_with_areas = true
+
 [node name="ArmsView" parent="." instance=ExtResource("1_xwcgv")]
 unique_name_in_owner = true
 
 [node name="Root" parent="ArmsView/SubViewport" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
-[node name="simple_gun" parent="ArmsView/SubViewport/Root/Arms/fps_arms/rig/Skeleton3D" index="0"]
-transform = Transform3D(0.999925, -0.0122354, -2.06754e-07, 0.0122355, 0.999925, -2.5332e-07, 2.25775e-07, 1.51226e-07, 1, -0.160347, 0.107148, 0.604451)
+[node name="GunAnchor" parent="ArmsView/SubViewport/Root/Arms" index="1"]
+transform = Transform3D(-0.990491, 0.0597847, 0.124612, 0.131709, 0.150865, 0.984223, 0.0397717, 0.981721, -0.161519, -0.194814, 0.0580682, 0.472297)
+
+[node name="LoadAnchor" parent="ArmsView/SubViewport/Root/Arms" index="2"]
+transform = Transform3D(-0.994351, -0.0709198, -0.00157219, -0.0133443, -0.189245, 0.991372, -0.0899829, 0.976897, 0.166969, -0.11866, 0.0507941, 0.493937)
 
 [node name="AnimationTree" parent="ArmsView" index="1"]
+parameters/AddSteps/add_amount = 0
 parameters/MainState/playback = SubResource("AnimationNodeStateMachinePlayback_j18qm")
 
 [editable path="ArmsView"]
-[editable path="ArmsView/SubViewport/Root/Arms/fps_arms"]
+[editable path="ArmsView/SubViewport/Root/Arms/GunAnchor/GunOffset/SmallLaserPistol"]
+[editable path="ArmsView/SubViewport/Root/Arms/FPSArms"]

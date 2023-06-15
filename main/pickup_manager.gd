@@ -10,4 +10,4 @@ func _ready():
 func on_picked(type : String):
 	match type:
 		"ammo":
-			weapon_data.reload()
+			weapon_data.restore()

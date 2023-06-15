@@ -1,44 +1,99 @@
-[gd_scene load_steps=22 format=3 uid="uid://c1ruobme5mf7l"]
+[gd_scene load_steps=36 format=3 uid="uid://c1ruobme5mf7l"]
 
 [ext_resource type="Script" path="res://main/main.gd" id="1_3yjrn"]
 [ext_resource type="Script" path="res://main/shoot_manager.gd" id="1_w010k"]
 [ext_resource type="PackedScene" uid="uid://don4817u8figv" path="res://fps_arms/fps_controller.tscn" id="1_x3s0a"]
 [ext_resource type="Script" path="res://main/pickup_manager.gd" id="2_hl8mw"]
 [ext_resource type="PackedScene" uid="uid://cg5ib85s40uk0" path="res://vfx/impact/impact.tscn" id="3_7qovb"]
-[ext_resource type="AudioStream" uid="uid://lb01bxc4avpb" path="res://assets/sounds/laser_gun.mp3" id="3_ah1b3"]
 [ext_resource type="PackedScene" uid="uid://b4cqtavitv24y" path="res://impact/impact_decal.tscn" id="3_fthyo"]
+[ext_resource type="Shader" path="res://assets/sky/sky.gdshader" id="3_i4hsl"]
 [ext_resource type="Texture2D" uid="uid://cn1xv8gcadsl3" path="res://assets/crosshair.png" id="3_stf78"]
 [ext_resource type="PackedScene" uid="uid://beieaq5q0p5sf" path="res://vfx/shot/shot.tscn" id="4_y6yno"]
-[ext_resource type="Texture2D" uid="uid://cpxvl0tn5ve4u" path="res://assets/grid.png" id="8_wf8fe"]
 [ext_resource type="PackedScene" uid="uid://bl15s41t61tkv" path="res://vfx/projectile/projectile.tscn" id="9_7cbri"]
 [ext_resource type="Script" path="res://main/impact_manager.gd" id="9_8y1m4"]
+[ext_resource type="Resource" uid="uid://c4lm8ngbupt2v" path="res://resources/main_focus_manager.tres" id="9_27qot"]
+[ext_resource type="AudioStream" uid="uid://c7gvbn7so5akc" path="res://assets/sounds/laserSmall_001.ogg" id="10_ou4kl"]
+[ext_resource type="Texture2D" uid="uid://brbtohct73mlt" path="res://assets/checkboard.png" id="13_cwe1y"]
 [ext_resource type="Script" path="res://UI/crosshair.gd" id="13_dau3n"]
 [ext_resource type="PackedScene" uid="uid://u8k1yuofjipe" path="res://pickup/pickup.tscn" id="13_kwddc"]
 [ext_resource type="PackedScene" uid="uid://c5negq8jua51d" path="res://UI/AmmoCounter/ammo_counter.tscn" id="14_oexx2"]
+[ext_resource type="Script" path="res://main/balloon_spawner.gd" id="16_42y4y"]
+[ext_resource type="PackedScene" uid="uid://bmmcg88wg7xxy" path="res://target/target.tscn" id="16_mf2ep"]
+[ext_resource type="PackedScene" uid="uid://bekqmgtgsmmud" path="res://balloon/balloon.tscn" id="19_a6vkk"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_epfwl"]
+[sub_resource type="Curve" id="Curve_dm5j7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 2.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kqpfv"]
+texture_mode = 1
+curve = SubResource("Curve_dm5j7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xsoe5"]
+shader = ExtResource("3_i4hsl")
+shader_parameter/top_color = Color(0.815686, 0.65098, 1, 1)
+shader_parameter/bottom_color = Color(0.392157, 0.607843, 1, 1)
+shader_parameter/gradient_curve = SubResource("CurveTexture_kqpfv")
 
 [sub_resource type="Sky" id="Sky_wka67"]
-sky_material = SubResource("ProceduralSkyMaterial_epfwl")
+sky_material = SubResource("ShaderMaterial_xsoe5")
 
 [sub_resource type="Environment" id="Environment_10hr7"]
 background_mode = 2
 sky = SubResource("Sky_wka67")
-ambient_light_color = Color(0.5, 0.5, 0.5, 1)
-ambient_light_sky_contribution = 0.6
+ambient_light_source = 2
+ambient_light_color = Color(0.772549, 0.764706, 0.847059, 1)
+ambient_light_sky_contribution = 0.5
 tonemap_mode = 2
+ssao_enabled = true
+glow_enabled = true
+glow_strength = 0.25
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_31dii"]
-albedo_texture = ExtResource("8_wf8fe")
+albedo_color = Color(0.309804, 0.756863, 0.396078, 1)
+albedo_texture = ExtResource("13_cwe1y")
 roughness = 0.8
 uv1_scale = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
 uv1_triplanar_sharpness = 10.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_4u7e7"]
-size = Vector2(1000, 1000)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aubcy"]
+shading_mode = 0
+albedo_color = Color(0.815686, 0.65098, 1, 1)
+proximity_fade_enabled = true
+proximity_fade_distance = 4.0
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tikpr"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_u8hmu"]
+size = Vector2(100, 100)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_bfwmc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ygxce"]
+cull_mode = 2
+
+[sub_resource type="Curve" id="Curve_dxiya"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_asglm"]
+curve = SubResource("Curve_dxiya")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ux3wj"]
+emission_shape = 3
+emission_box_extents = Vector3(20, 10, 20)
+gravity = Vector3(0, 0.25, 0)
+initial_velocity_min = 0.1
+initial_velocity_max = 0.25
+scale_min = 0.1
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_asglm")
+turbulence_enabled = true
+turbulence_noise_strength = 20.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_to0og"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ynwlr"]
+size = Vector3(200, 1, 200)
 
 [node name="main" type="Node"]
 script = ExtResource("1_3yjrn")
@@ -57,10 +112,11 @@ impact_decal_scene = ExtResource("3_fthyo")
 impact_scene = ExtResource("3_7qovb")
 shot_scene = ExtResource("4_y6yno")
 projectile_scene = ExtResource("9_7cbri")
+main_focus_manager = ExtResource("9_27qot")
 
 [node name="LaserSound" type="AudioStreamPlayer" parent="World3D/ShootManager"]
 unique_name_in_owner = true
-stream = ExtResource("3_ah1b3")
+stream = ExtResource("10_ou4kl")
 volume_db = -10.0
 max_polyphony = 4
 
@@ -70,7 +126,7 @@ script = ExtResource("9_8y1m4")
 
 [node name="FpsController" parent="World3D" instance=ExtResource("1_x3s0a")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 4, 3)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World3D"]
 transform = Transform3D(0.707106, -0.664463, 0.241845, 0, 0.34202, 0.939692, -0.707106, -0.664463, 0.241845, 0, 0, 0)
@@ -78,81 +134,136 @@ light_energy = 1.2
 shadow_enabled = true
 directional_shadow_max_distance = 20.0
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="World3D"]
+[node name="Terrain" type="CSGCombiner3D" parent="World3D"]
 material_override = SubResource("StandardMaterial3D_31dii")
 use_collision = true
+metadata/_edit_lock_ = true
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0.5)
+[node name="CSGBox3D10" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -2, 4)
+size = Vector3(12, 4, 10)
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -10)
+size = Vector3(12, 4, 10)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, 3.5)
 size = Vector3(6, 2, 5)
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, -1)
+[node name="CSGBox3D4" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, 2)
 size = Vector3(2, 2, 2)
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3.75, -4)
+[node name="CSGBox3D5" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75, -1)
 size = Vector3(2, 0.5, 4)
 
-[node name="CSGBox3D7" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5, 3.75, -7)
+[node name="CSGBox3D7" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 3.75, -4)
 size = Vector3(7, 0.5, 2)
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0.5)
-size = Vector3(6, 4, 5)
+[node name="CSGBox3D3" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3.5)
+size = Vector3(6, 8, 5)
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 2, -8)
-size = Vector3(2, 4, 4)
+[node name="CSGBox3D6" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+size = Vector3(2, 8, 4)
 
-[node name="CSGBox3D9" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1, -9)
+[node name="CSGBox3D9" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1, -6)
 size = Vector3(5, 2, 2)
 
-[node name="CSGBox3D8" type="CSGBox3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 2, -7)
-size = Vector3(2, 4, 2)
+[node name="CSGBox3D8" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2, -4)
+size = Vector3(2, 12, 2)
 
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1, 0, 2.5)
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="World3D/Terrain"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7, 0, 5.5)
 polygon = PackedVector2Array(-0.5, 0, 2.5, 2, 2.5, 0)
 depth = 2.0
 
-[node name="CSGPolygon3D4" type="CSGPolygon3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, -12.5)
+[node name="CSGPolygon3D4" type="CSGPolygon3D" parent="World3D/Terrain"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 0, -9.5)
 polygon = PackedVector2Array(-0.5, 0, 2.5, 2, 2.5, 0)
 depth = 2.0
 
-[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, 2)
+[node name="CSGPolygon3D2" type="CSGPolygon3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2, 5)
 polygon = PackedVector2Array(-0.5, 0, 2.5, 2, 2.5, 0)
 depth = 2.0
 
-[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="World3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, -8)
+[node name="CSGPolygon3D3" type="CSGPolygon3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2, -5)
 polygon = PackedVector2Array(-0.5, 0, 2.5, 2, 2.5, 0)
 depth = 2.0
 
-[node name="Floor" type="StaticBody3D" parent="World3D"]
+[node name="Bottom" type="Node3D" parent="World3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="World3D/Floor"]
-material_override = SubResource("StandardMaterial3D_31dii")
-mesh = SubResource("PlaneMesh_4u7e7")
+[node name="Fog" type="MeshInstance3D" parent="World3D/Bottom"]
+material_override = SubResource("StandardMaterial3D_aubcy")
+mesh = SubResource("PlaneMesh_u8hmu")
 skeleton = NodePath("../..")
+metadata/_edit_lock_ = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="World3D/Floor"]
-shape = SubResource("WorldBoundaryShape3D_tikpr")
+[node name="BottomArea" type="Area3D" parent="World3D/Bottom"]
+unique_name_in_owner = true
+collision_layer = 2
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World3D/Bottom/BottomArea"]
+shape = SubResource("WorldBoundaryShape3D_bfwmc")
 
 [node name="AmmoPickup" parent="World3D" instance=ExtResource("13_kwddc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 4, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 4, 2.5)
 
 [node name="HealthPickup2" parent="World3D" instance=ExtResource("13_kwddc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0, 0.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 4, 4.5)
 pickup_type = "health"
 
-[node name="AmmoPickup2" parent="World3D" instance=ExtResource("13_kwddc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, -5)
+[node name="Target" parent="World3D" instance=ExtResource("16_mf2ep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 7, -3)
+
+[node name="Target4" parent="World3D" instance=ExtResource("16_mf2ep")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8, 7, -4)
+
+[node name="Target2" parent="World3D" instance=ExtResource("16_mf2ep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 6)
+
+[node name="Target3" parent="World3D" instance=ExtResource("16_mf2ep")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3, -7)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="World3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+material_override = SubResource("StandardMaterial3D_ygxce")
+amount = 64
+lifetime = 4.0
+visibility_aabb = AABB(-20, -5, -20, 40, 10, 40)
+transform_align = 1
+process_material = SubResource("ParticleProcessMaterial_ux3wj")
+draw_pass_1 = SubResource("QuadMesh_to0og")
+
+[node name="BalloonSpawner" type="Node3D" parent="World3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, -3)
+script = ExtResource("16_42y4y")
+balloon_scene = ExtResource("19_a6vkk")
+
+[node name="SpawnTimer" type="Timer" parent="World3D/BalloonSpawner"]
+unique_name_in_owner = true
+wait_time = 2.0
+autostart = true
+
+[node name="Holder" type="Node3D" parent="World3D/BalloonSpawner"]
+unique_name_in_owner = true
+
+[node name="HeightLimit" type="Area3D" parent="World3D" groups=["limit"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World3D/HeightLimit"]
+shape = SubResource("BoxShape3D_ynwlr")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

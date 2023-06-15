@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b4fbrjiauu7ij"]
+
+[ext_resource type="Shader" path="res://assets/outline.gdshader" id="1_t82xe"]
+
+[resource]
+resource_local_to_scene = true
+render_priority = 1
+shader = ExtResource("1_t82xe")
+shader_parameter/outline_color = Color(1, 0.780392, 0.117647, 1)
+shader_parameter/outline_width = 0.1
+shader_parameter/alpha = 1.0

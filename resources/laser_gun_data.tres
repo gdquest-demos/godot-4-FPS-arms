@@ -6,3 +6,4 @@
 script = ExtResource("1_36itb")
 weapon_name = "Laser Gun"
 max_ammo = 5
+max_mag = 4

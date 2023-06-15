@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://vfx/impact/impact.gd" id="1_nq6nt"]
 [ext_resource type="Shader" path="res://vfx/impact/impact.gdshader" id="2_c14fl"]
-[ext_resource type="AudioStream" uid="uid://br1r10p5xv5ue" path="res://assets/sounds/whoosh_impact.mp3" id="3_46ogw"]
+[ext_resource type="AudioStream" uid="uid://bkuajosof0ush" path="res://assets/sounds/laserLarge_003.ogg" id="3_8na77"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_umpsg"]
 cull_mode = 2
@@ -183,7 +183,7 @@ libraries = {
 
 [node name="ImpactSound" type="AudioStreamPlayer3D" parent="."]
 unique_name_in_owner = true
-stream = ExtResource("3_46ogw")
+stream = ExtResource("3_8na77")
 volume_db = -20.0
-max_db = -10.0
+max_db = 0.0
 autoplay = true

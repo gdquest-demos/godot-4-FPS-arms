@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://diuv33u105j6b"]
+
+[resource]
+resource_local_to_scene = true
+albedo_color = Color(1, 0.458824, 0.176471, 1)
+roughness = 0.25
+rim_enabled = true

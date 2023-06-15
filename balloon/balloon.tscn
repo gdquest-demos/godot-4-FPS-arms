@@ -1,0 +1,268 @@
+[gd_scene load_steps=16 format=3 uid="uid://bekqmgtgsmmud"]
+
+[ext_resource type="Script" path="res://balloon/balloon.gd" id="1_ctbdi"]
+[ext_resource type="ArrayMesh" uid="uid://267rynvlmoab" path="res://balloon/godot_balloon.obj" id="1_hqkyr"]
+[ext_resource type="AudioStream" uid="uid://c5xdbdep2vle5" path="res://assets/sounds/impactPlate_medium_002.ogg" id="2_4cg5r"]
+[ext_resource type="Shader" path="res://balloon/rope.gdshader" id="2_yo7od"]
+[ext_resource type="Shader" path="res://assets/outline.gdshader" id="3_7yr2m"]
+[ext_resource type="PackedScene" uid="uid://d2d1fk2ymokbh" path="res://hit_zone/hit_zone.tscn" id="5_yn4ug"]
+
+[sub_resource type="Shader" id="Shader_lvjba"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.0.3.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+uniform float rim : hint_range(0,1);
+uniform float rim_tint : hint_range(0,1);
+uniform sampler2D texture_rim : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+varying float voronoi_value;
+uniform float voronoi_progress = 0.0;
+uniform float deformation_strength = 0.0;
+uniform float voronoi_ease = 0.0;
+// Voronoi method credit:
+// The MIT License
+// Copyright © 2013 Inigo Quilez
+// https://www.shadertoy.com/view/ldl3Dl
+
+vec3 hash( vec3 x ){
+	x = vec3( dot(x,vec3(127.1,311.7, 74.7)),
+			  dot(x,vec3(269.5,183.3,246.1)),
+			  dot(x,vec3(113.5,271.9,124.6)));
+	return fract(sin(x)*43758.5453123);
+}
+
+vec3 voronoi( in vec3 x ){
+	vec3 p = floor( x );
+	vec3 f = fract( x );
+	
+	float id = 0.0;
+	vec2 res = vec2( 100.0 );
+	for( int k=-1; k<=1; k++ )
+	for( int j=-1; j<=1; j++ )
+	for( int i=-1; i<=1; i++ ) {
+		vec3 b = vec3( float(i), float(j), float(k) );
+		vec3 r = vec3( b ) - f + hash( p + b );
+		float d = dot( r, r );
+		if( d < res.x ) {
+			id = dot( p+b, vec3(1.0,57.0,113.0 ) );
+			res = vec2( d, res.x );
+		} else if( d < res.y ) {
+			res.y = d;
+		}
+    }
+    return vec3( sqrt( res ), abs(id) );
+}
+
+void vertex() {
+	voronoi_value = voronoi(VERTEX * 2.0).x;
+	VERTEX += NORMAL * (1.0 - pow(voronoi_value, voronoi_ease * voronoi_progress)) * deformation_strength;
+	
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+}
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+	vec2 rim_tex = texture(texture_rim,base_uv).xy;
+	RIM = rim*rim_tex.x;	RIM_TINT = rim_tint*rim_tex.y;
+	ALPHA = smoothstep(voronoi_progress - 0.01, voronoi_progress + 0.01, voronoi_value);
+	ALPHA_SCISSOR_THRESHOLD = 0.5;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fpi3f"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_lvjba")
+shader_parameter/albedo = Color(1, 0.458824, 0.176471, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 0.25
+shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/rim = 1.0
+shader_parameter/rim_tint = 0.5
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/voronoi_progress = 0.0
+shader_parameter/deformation_strength = 1.0
+shader_parameter/voronoi_ease = 0.25
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qquhy"]
+resource_local_to_scene = true
+render_priority = 1
+shader = ExtResource("3_7yr2m")
+shader_parameter/outline_color = Color(1, 0.780392, 0.117647, 1)
+shader_parameter/outline_width = 0.02
+shader_parameter/alpha = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6qxn"]
+render_priority = 0
+shader = ExtResource("2_yo7od")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5cf11"]
+top_radius = 0.003
+bottom_radius = 0.003
+height = 1.0
+radial_segments = 4
+rings = 10
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_q5pp0"]
+radius = 0.25
+
+[sub_resource type="Animation" id="Animation_57t4l"]
+resource_name = "boom"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ImpactSound:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head:material_override:shader_parameter/voronoi_progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RopeAnchor/Cord:transparency")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_ghnvb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ImpactSound:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head:material_override:shader_parameter/voronoi_progress")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RopeAnchor:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RopeAnchor/Cord:transparency")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i4rl8"]
+_data = {
+"RESET": SubResource("Animation_ghnvb"),
+"boom": SubResource("Animation_57t4l")
+}
+
+[node name="Balloon" type="Node3D"]
+script = ExtResource("1_ctbdi")
+colors = Array[Color]([Color(0.992157, 0.729412, 0, 1), Color(0.933333, 0.509804, 0.894118, 1), Color(0.2, 0.509804, 1, 1)])
+
+[node name="ImpactSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_4cg5r")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_fpi3f")
+material_overlay = SubResource("ShaderMaterial_qquhy")
+mesh = ExtResource("1_hqkyr")
+
+[node name="RopeAnchor" type="Node3D" parent="."]
+
+[node name="Cord" type="MeshInstance3D" parent="RopeAnchor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("ShaderMaterial_a6qxn")
+mesh = SubResource("CylinderMesh_5cf11")
+skeleton = NodePath("../..")
+
+[node name="HitZone" parent="." instance=ExtResource("5_yn4ug")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitZone"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_q5pp0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_i4rl8")
+}

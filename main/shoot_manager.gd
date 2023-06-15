@@ -7,21 +7,13 @@ extends Node3D
 @export var shot_scene : PackedScene
 @export var projectile_scene : PackedScene
 @onready var impact_manager = %ImpactManager
-
-var laser_range = 20.0
+@export var main_focus_manager : FocusManager
 
 func _ready():
 	player.connect("shoot", on_player_shoot)
 
-func on_player_shoot(gun_end_position : Vector3):
-	var viewport = get_viewport()
-	var camera : Camera3D = viewport.get_camera_3d()
-	var origin = camera.project_ray_origin(viewport.size * 0.1)
-	var normal : Vector3 = camera.project_ray_normal(viewport.size / 2.0)
-	normal = normal.rotated(Vector3(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)).normalized(), 0.05)
-	var end_position = origin + normal * laser_range
-	var query = PhysicsRayQueryParameters3D.create(origin, end_position)
-	var collision = get_world_3d().direct_space_state.intersect_ray(query)
+func on_player_shoot(origin : Vector3, normal : Vector3, gun_end_position : Vector3, weapon_range : float, collision : Dictionary):
+	var end_position = origin + normal * weapon_range
 	var collide = collision != {}
 	
 	var shot : Node3D = shot_scene.instantiate()
@@ -32,8 +24,8 @@ func on_player_shoot(gun_end_position : Vector3):
 	laser_sound.play()
 
 	if collide: end_position = collision.position
-	var duration = end_position.distance_to(gun_end_position) / laser_range
-	duration *= 0.5
+	var duration = end_position.distance_to(gun_end_position) / weapon_range
+	duration *= 0.2
 	
 	var projectile = projectile_scene.instantiate()
 	projectile.position = gun_end_position
@@ -45,18 +37,23 @@ func on_player_shoot(gun_end_position : Vector3):
 	t.tween_method(node_3d_alpha.bind(projectile), 0.0, 1.0, duration)
 	t.chain().tween_callback(projectile.queue_free)
 	
-	if collide:
-		end_position = collision.position
-		await get_tree().create_timer(duration).timeout
-		var impact : Node3D = impact_scene.instantiate()
-		impact.position = collision.position
-		add_child(impact)
-		impact.transform = align_with_y(impact.transform, collision.normal)
-		
-		var impact_decal = impact_decal_scene.instantiate()
-		impact_decal.position = collision.position
-		impact_manager.add_child(impact_decal)
-		impact_decal.transform = align_with_y(impact_decal.transform, collision.normal)
+	if !collide: return
+	
+	main_focus_manager.hit(collision.collider)
+	
+	end_position = collision.position
+	await get_tree().create_timer(duration).timeout
+	var impact : Node3D = impact_scene.instantiate()
+	impact.position = collision.position
+	add_child(impact)
+	impact.transform = align_with_y(impact.transform, collision.normal)
+	
+	if !collision.collider or collision.collider is Area3D: return
+	
+	var impact_decal = impact_decal_scene.instantiate()
+	impact_decal.position = collision.position
+	impact_manager.add_child(impact_decal)
+	impact_decal.transform = align_with_y(impact_decal.transform, collision.normal)
 
 
 # https://kidscancode.org/godot_recipes/3.x/3d/3d_align_surface/
