@@ -2,20 +2,22 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpxvl0tn5ve4u"
-path="res://.godot/imported/grid.png-0e5acf495abafdc7f64f9b213a44aa0e.ctex"
+uid="uid://cejs2qavhdiia"
+path.s3tc="res://.godot/imported/target_target_albedo.png-052bd557689b6b8b8d683917b278a489.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
+generator_parameters={}
 
 [deps]
 
-source_file="res://assets/grid.png"
-dest_files=["res://.godot/imported/grid.png-0e5acf495abafdc7f64f9b213a44aa0e.ctex"]
+source_file="res://components/target/target_target_albedo.png"
+dest_files=["res://.godot/imported/target_target_albedo.png-052bd557689b6b8b8d683917b278a489.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

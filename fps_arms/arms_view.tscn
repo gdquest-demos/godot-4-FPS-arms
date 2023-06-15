@@ -1,10 +1,10 @@
 [gd_scene load_steps=36 format=3 uid="uid://b8i8vajkg00s0"]
 
 [ext_resource type="Script" path="res://fps_arms/arms_view.gd" id="1_e15a3"]
-[ext_resource type="PackedScene" uid="uid://cl2ytb52ylubc" path="res://assets/SmallLaserPistol.glb" id="2_1jmvq"]
+[ext_resource type="PackedScene" uid="uid://cl2ytb52ylubc" path="res://assets/small_laser_pistol.glb" id="2_1jmvq"]
 [ext_resource type="PackedScene" uid="uid://caxt51h474pab" path="res://assets/fps_arms.glb" id="2_g8snw"]
-[ext_resource type="Material" uid="uid://dlnmdgy8fd47u" path="res://assets/materials/arms_mat.tres" id="3_jikf0"]
-[ext_resource type="Material" uid="uid://b01cwao6pymvk" path="res://assets/materials/gloves_mat.tres" id="4_jyjh0"]
+[ext_resource type="Material" uid="uid://dlnmdgy8fd47u" path="res://fps_arms/materials/arms_mat.tres" id="3_jikf0"]
+[ext_resource type="Material" uid="uid://b01cwao6pymvk" path="res://fps_arms/materials/gloves_mat.tres" id="4_jyjh0"]
 [ext_resource type="AnimationLibrary" uid="uid://dw5ae8js8d8wi" path="res://fps_arms/custom_animations/custom_library.res" id="5_6ipce"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wvvvv"]
@@ -8721,7 +8721,7 @@ nodes/ShakeShot/position = Vector2(340, 240)
 nodes/footstep/node = SubResource("AnimationNodeAnimation_hccaf")
 nodes/footstep/position = Vector2(280, 0)
 nodes/output/position = Vector2(660, 80)
-node_connections = [&"output", 0, &"AddSteps", &"AddSteps", 0, &"ShakeShot", &"AddSteps", 1, &"footstep", &"FireShot", 0, &"MainState", &"FireShot", 1, &"Fire", &"ReloadShot", 0, &"FireShot", &"ReloadShot", 1, &"Add2", &"ShakeShot", 0, &"ReloadShot", &"ShakeShot", 1, &"Shake", &"Add2", 0, &"Reload", &"Add2", 1, &"Animation"]
+node_connections = [&"output", 0, &"AddSteps", &"Add2", 0, &"Reload", &"Add2", 1, &"Animation", &"AddSteps", 0, &"ShakeShot", &"AddSteps", 1, &"footstep", &"FireShot", 0, &"MainState", &"FireShot", 1, &"Fire", &"ReloadShot", 0, &"FireShot", &"ReloadShot", 1, &"Add2", &"ShakeShot", 0, &"ReloadShot", &"ShakeShot", 1, &"Shake"]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_7sge0"]
 
@@ -8737,6 +8737,7 @@ script = ExtResource("1_e15a3")
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
 handle_input_locally = false
+msaa_3d = 2
 mesh_lod_threshold = 0.0
 size = Vector2i(1280, 720)
 size_2d_override_stretch = true
@@ -8757,7 +8758,7 @@ fov = 35.0
 far = 4.0
 
 [node name="GunAnchor" type="BoneAttachment3D" parent="SubViewport/Root/Arms"]
-transform = Transform3D(-0.991271, 0.0588306, 0.118672, 0.125699, 0.151211, 0.984953, 0.039783, 0.981725, -0.161538, -0.194822, 0.0588783, 0.472297)
+transform = Transform3D(-0.991806, 0.058167, 0.114476, 0.121477, 0.151518, 0.98545, 0.0398005, 0.981727, -0.161484, -0.194833, 0.0568537, 0.472298)
 bone_name = "DEF-hand.R"
 bone_idx = 30
 use_external_skeleton = true
@@ -8778,7 +8779,7 @@ unique_name_in_owner = true
 transform = Transform3D(0.999985, 0.000805389, 0.00497244, -0.00080435, 0.999999, -0.000203013, -0.00497257, 0.000200033, 0.999987, 0, 0.129, 0.04)
 
 [node name="LoadAnchor" type="BoneAttachment3D" parent="SubViewport/Root/Arms"]
-transform = Transform3D(-0.994253, -0.0699163, -0.00760268, -0.0193257, -0.18962, 0.991341, -0.089883, 0.976903, 0.166918, -0.118628, 0.052067, 0.49393)
+transform = Transform3D(-0.994162, -0.0691867, -0.0118402, -0.0234934, -0.189941, 0.991305, -0.0899213, 0.976896, 0.16682, -0.118611, 0.0503537, 0.493939)
 visible = false
 bone_name = "DEF-hand.L"
 bone_idx = 5

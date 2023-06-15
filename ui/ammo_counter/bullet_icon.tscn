@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bofyxu1ism2ru"]
 
-[ext_resource type="Script" path="res://UI/AmmoCounter/bullet_icon.gd" id="2_15ceo"]
+[ext_resource type="Script" path="res://ui/ammo_counter/bullet_icon.gd" id="2_15ceo"]
 
 [node name="BulletIcon" type="ColorRect"]
 custom_minimum_size = Vector2(16, 8)

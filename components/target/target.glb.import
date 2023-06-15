@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cl2ytb52ylubc"
-path="res://.godot/imported/SmallLaserPistol.glb-f447205557734b50328aa0ff9a4a2ce3.scn"
+uid="uid://ckgkqnl6bxl87"
+path="res://.godot/imported/target.glb-3c6598a66fde8ce4ddafd415127d222e.scn"
 
 [deps]
 
-source_file="res://assets/SmallLaserPistol.glb"
-dest_files=["res://.godot/imported/SmallLaserPistol.glb-f447205557734b50328aa0ff9a4a2ce3.scn"]
+source_file="res://components/target/target.glb"
+dest_files=["res://.godot/imported/target.glb-3c6598a66fde8ce4ddafd415127d222e.scn"]
 
 [params]
 

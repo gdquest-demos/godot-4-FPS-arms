@@ -1,11 +1,11 @@
 [gd_scene load_steps=16 format=3 uid="uid://bekqmgtgsmmud"]
 
-[ext_resource type="Script" path="res://balloon/balloon.gd" id="1_ctbdi"]
-[ext_resource type="ArrayMesh" uid="uid://267rynvlmoab" path="res://balloon/godot_balloon.obj" id="1_hqkyr"]
+[ext_resource type="Script" path="res://components/balloon/balloon.gd" id="1_ctbdi"]
+[ext_resource type="ArrayMesh" uid="uid://267rynvlmoab" path="res://components/balloon/godot_balloon.obj" id="1_hqkyr"]
 [ext_resource type="AudioStream" uid="uid://c5xdbdep2vle5" path="res://assets/sounds/impactPlate_medium_002.ogg" id="2_4cg5r"]
-[ext_resource type="Shader" path="res://balloon/rope.gdshader" id="2_yo7od"]
-[ext_resource type="Shader" path="res://assets/outline.gdshader" id="3_7yr2m"]
-[ext_resource type="PackedScene" uid="uid://d2d1fk2ymokbh" path="res://hit_zone/hit_zone.tscn" id="5_yn4ug"]
+[ext_resource type="Shader" path="res://components/balloon/rope.gdshader" id="2_yo7od"]
+[ext_resource type="Shader" path="res://assets/materials/outline.gdshader" id="3_7yr2m"]
+[ext_resource type="PackedScene" uid="uid://d2d1fk2ymokbh" path="res://components/hit_zone/hit_zone.tscn" id="5_yn4ug"]
 
 [sub_resource type="Shader" id="Shader_lvjba"]
 code = "// NOTE: Shader automatically converted from Godot Engine 4.0.3.stable's StandardMaterial3D.

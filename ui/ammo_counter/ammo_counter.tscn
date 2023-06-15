@@ -1,16 +1,16 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5negq8jua51d"]
 
-[ext_resource type="Script" path="res://UI/AmmoCounter/ammo_counter.gd" id="1_auc1m"]
-[ext_resource type="Texture2D" uid="uid://58fnlrsjl0uu" path="res://assets/bolt_icon.png" id="2_m3cbi"]
+[ext_resource type="Script" path="res://ui/ammo_counter/ammo_counter.gd" id="1_c16cp"]
+[ext_resource type="Texture2D" uid="uid://58fnlrsjl0uu" path="res://assets/bolt_icon.png" id="2_ybss5"]
 
 [node name="AmmoCounter" type="HBoxContainer"]
 theme_override_constants/separation = 8
-script = ExtResource("1_auc1m")
+script = ExtResource("1_c16cp")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-texture = ExtResource("2_m3cbi")
+texture = ExtResource("2_ybss5")
 expand_mode = 1
 stretch_mode = 5
 

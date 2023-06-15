@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://267rynvlmoab"
+path="res://.godot/imported/godot_balloon.obj-675eb0391ef5dd0217fe60f28d23537e.mesh"
+
+[deps]
+
+files=["res://.godot/imported/godot_balloon.obj-675eb0391ef5dd0217fe60f28d23537e.mesh"]
+
+source_file="res://components/balloon/godot_balloon.obj"
+dest_files=["res://.godot/imported/godot_balloon.obj-675eb0391ef5dd0217fe60f28d23537e.mesh", "res://.godot/imported/godot_balloon.obj-675eb0391ef5dd0217fe60f28d23537e.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

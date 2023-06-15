@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://bmmcg88wg7xxy"]
 
-[ext_resource type="Script" path="res://target/target.gd" id="1_6jap5"]
-[ext_resource type="PackedScene" uid="uid://ckgkqnl6bxl87" path="res://target/target.glb" id="3_4l7ax"]
-[ext_resource type="PackedScene" uid="uid://d2d1fk2ymokbh" path="res://hit_zone/hit_zone.tscn" id="3_i8kex"]
-[ext_resource type="Material" uid="uid://b4fbrjiauu7ij" path="res://assets/outline_mat.tres" id="3_xablk"]
+[ext_resource type="Script" path="res://components/target/target.gd" id="1_6jap5"]
+[ext_resource type="PackedScene" uid="uid://ckgkqnl6bxl87" path="res://components/target/target.glb" id="3_4l7ax"]
+[ext_resource type="PackedScene" uid="uid://d2d1fk2ymokbh" path="res://components/hit_zone/hit_zone.tscn" id="3_i8kex"]
+[ext_resource type="Material" uid="uid://b4fbrjiauu7ij" path="res://assets/materials/outline_mat.tres" id="3_xablk"]
 [ext_resource type="AudioStream" uid="uid://bmx3jr34xno7i" path="res://assets/sounds/phaserUp7.ogg" id="4_rbo4c"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7o21f"]

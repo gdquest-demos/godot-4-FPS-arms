@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://q5fe84fnqsis" path="res://assets/impacts/impact_diffuse_1.png" id="1_fi453"]
 [ext_resource type="Texture2D" uid="uid://b01wbia7myh2m" path="res://assets/impacts/impact_normal_1.png" id="2_u1pba"]
-[ext_resource type="Script" path="res://impact/impact_decal.gd" id="3_g8djy"]
+[ext_resource type="Script" path="res://vfx/impact_decal/impact_decal.gd" id="3_g8djy"]
 [ext_resource type="Texture2D" uid="uid://c3gpkrb6laug0" path="res://assets/impacts/impact_diffuse_2.png" id="4_2l6e2"]
 [ext_resource type="Texture2D" uid="uid://x4yboo0skivx" path="res://assets/impacts/impact_diffuse_3.png" id="5_660st"]
 [ext_resource type="Texture2D" uid="uid://n7lp3r3de272" path="res://assets/impacts/impact_normal_2.png" id="6_mbav1"]

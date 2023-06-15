@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://don4817u8figv" path="res://fps_arms/fps_controller.tscn" id="1_x3s0a"]
 [ext_resource type="Script" path="res://main/pickup_manager.gd" id="2_hl8mw"]
 [ext_resource type="PackedScene" uid="uid://cg5ib85s40uk0" path="res://vfx/impact/impact.tscn" id="3_7qovb"]
-[ext_resource type="PackedScene" uid="uid://b4cqtavitv24y" path="res://impact/impact_decal.tscn" id="3_fthyo"]
+[ext_resource type="PackedScene" uid="uid://b4cqtavitv24y" path="res://vfx/impact_decal/impact_decal.tscn" id="3_fthyo"]
 [ext_resource type="Shader" path="res://assets/sky/sky.gdshader" id="3_i4hsl"]
 [ext_resource type="Texture2D" uid="uid://cn1xv8gcadsl3" path="res://assets/crosshair.png" id="3_stf78"]
 [ext_resource type="PackedScene" uid="uid://beieaq5q0p5sf" path="res://vfx/shot/shot.tscn" id="4_y6yno"]
@@ -14,12 +14,12 @@
 [ext_resource type="Resource" uid="uid://c4lm8ngbupt2v" path="res://resources/main_focus_manager.tres" id="9_27qot"]
 [ext_resource type="AudioStream" uid="uid://c7gvbn7so5akc" path="res://assets/sounds/laserSmall_001.ogg" id="10_ou4kl"]
 [ext_resource type="Texture2D" uid="uid://brbtohct73mlt" path="res://assets/checkboard.png" id="13_cwe1y"]
-[ext_resource type="Script" path="res://UI/crosshair.gd" id="13_dau3n"]
-[ext_resource type="PackedScene" uid="uid://u8k1yuofjipe" path="res://pickup/pickup.tscn" id="13_kwddc"]
-[ext_resource type="PackedScene" uid="uid://c5negq8jua51d" path="res://UI/AmmoCounter/ammo_counter.tscn" id="14_oexx2"]
+[ext_resource type="Script" path="res://ui/crosshair.gd" id="13_dau3n"]
+[ext_resource type="PackedScene" uid="uid://u8k1yuofjipe" path="res://components/pickup/pickup.tscn" id="13_kwddc"]
+[ext_resource type="PackedScene" uid="uid://c5negq8jua51d" path="res://ui/ammo_counter/ammo_counter.tscn" id="14_oexx2"]
 [ext_resource type="Script" path="res://main/balloon_spawner.gd" id="16_42y4y"]
-[ext_resource type="PackedScene" uid="uid://bmmcg88wg7xxy" path="res://target/target.tscn" id="16_mf2ep"]
-[ext_resource type="PackedScene" uid="uid://bekqmgtgsmmud" path="res://balloon/balloon.tscn" id="19_a6vkk"]
+[ext_resource type="PackedScene" uid="uid://bmmcg88wg7xxy" path="res://components/target/target.tscn" id="16_mf2ep"]
+[ext_resource type="PackedScene" uid="uid://bekqmgtgsmmud" path="res://components/balloon/balloon.tscn" id="19_a6vkk"]
 
 [sub_resource type="Curve" id="Curve_dm5j7"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 2.0, 0.0, 1, 0]
@@ -132,7 +132,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 4, 3)
 transform = Transform3D(0.707106, -0.664463, 0.241845, 0, 0.34202, 0.939692, -0.707106, -0.664463, 0.241845, 0, 0, 0)
 light_energy = 1.2
 shadow_enabled = true
-directional_shadow_max_distance = 20.0
 
 [node name="Terrain" type="CSGCombiner3D" parent="World3D"]
 material_override = SubResource("StandardMaterial3D_31dii")
@@ -140,7 +139,7 @@ use_collision = true
 metadata/_edit_lock_ = true
 
 [node name="CSGBox3D10" type="CSGBox3D" parent="World3D/Terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -2, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -2, 6)
 size = Vector3(12, 4, 10)
 
 [node name="CSGBox3D11" type="CSGBox3D" parent="World3D/Terrain"]

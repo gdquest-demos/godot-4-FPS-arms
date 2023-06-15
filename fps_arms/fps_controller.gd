@@ -38,7 +38,7 @@ func on_footstep():
 func _unhandled_input(event):
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		
+	
 	if event is InputEventMouseMotion:
 		camera.rotation.y -= event.relative.x * 0.005
 		camera.rotation.x -= event.relative.y * 0.005

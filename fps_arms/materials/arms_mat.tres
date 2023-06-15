@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dlnmdgy8fd47u"]
 
-[ext_resource type="Shader" path="res://assets/materials/arms_color.gdshader" id="1_vs23t"]
+[ext_resource type="Shader" path="res://fps_arms/materials/arms_color.gdshader" id="1_vs23t"]
 
 [resource]
 render_priority = 0

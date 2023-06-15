@@ -59,10 +59,10 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="GunAnchor" parent="ArmsView/SubViewport/Root/Arms" index="1"]
-transform = Transform3D(-0.990491, 0.0597847, 0.124612, 0.131709, 0.150865, 0.984223, 0.0397717, 0.981721, -0.161519, -0.194814, 0.0580682, 0.472297)
+transform = Transform3D(-0.990399, 0.0598887, 0.125364, 0.132434, 0.15072, 0.984124, 0.0397545, 0.981718, -0.161622, -0.194802, 0.0622591, 0.472295)
 
 [node name="LoadAnchor" parent="ArmsView/SubViewport/Root/Arms" index="2"]
-transform = Transform3D(-0.994351, -0.0709198, -0.00157219, -0.0133443, -0.189245, 0.991372, -0.0899829, 0.976897, 0.166969, -0.11866, 0.0507941, 0.493937)
+transform = Transform3D(-0.994348, -0.0710942, -0.000843152, -0.0126735, -0.189102, 0.991368, -0.0898107, 0.97691, 0.167069, -0.118655, 0.0549489, 0.493914)
 
 [node name="AnimationTree" parent="ArmsView" index="1"]
 parameters/AddSteps/add_amount = 0
