@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://d2gs8i3uuaxli"]
+
+[ext_resource type="Script" path="res://components/target_launcher/target_launcher.gd" id="1_mhiew"]
+[ext_resource type="PackedScene" uid="uid://bmmcg88wg7xxy" path="res://components/target/target.tscn" id="2_ngqy8"]
+[ext_resource type="AudioStream" uid="uid://bc12vbest7fgy" path="res://assets/sounds/throw.ogg" id="3_iu6yq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_djpwc"]
+albedo_color = Color(0.933333, 0.545098, 0.835294, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5wl8s"]
+size = Vector3(1, 0.1, 0.2)
+
+[node name="TargetLauncher" type="Node3D"]
+script = ExtResource("1_mhiew")
+
+[node name="Target" parent="." instance=ExtResource("2_ngqy8")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="Body" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_djpwc")
+mesh = SubResource("BoxMesh_5wl8s")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
+[node name="ThrowSound" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("3_iu6yq")
