@@ -19,7 +19,9 @@ const JUMP_VELOCITY = 4.5
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var last_firing_time = 0
 
-var weapon_meter_range = 20.0
+@export var weapon_meter_range = 20.0
+
+var look_direction = Vector2.ZERO
 
 signal shoot(origin : Vector3, normal : Vector3, gun_end_position : Vector3, weapon_range : float, collision : Dictionary)
 
@@ -38,11 +40,20 @@ func on_footstep():
 func _unhandled_input(event):
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
+		
 	if event is InputEventMouseMotion:
-		camera.rotation.y -= event.relative.x * 0.005
-		camera.rotation.x -= event.relative.y * 0.005
-		camera.rotation.x = clamp(camera.rotation.x, -1.2, 1.2)
+		look_direction = event.relative * 0.0025
+
+func check_look_motion(delta):
+	var joy_look_vector = Input.get_vector("look_left", "look_right", "look_up", "look_down")
+	if joy_look_vector.length() > 0.0:
+		look_direction = joy_look_vector * 2.0 * delta
+
+	camera.rotation.y -= look_direction.x
+	camera.rotation.x -= look_direction.y
+	camera.rotation.x = clamp(camera.rotation.x, -1.2, 1.2)
+	
+	look_direction = Vector2.ZERO
 
 func get_gun_end_position():
 	var depth = arms_view.camera.to_local(arms_view.gun_end.global_position).length()
@@ -95,6 +106,7 @@ func check_focus():
 	main_focus_manager.focus(current_focus_node)
 	
 func _physics_process(delta):
+	check_look_motion(delta)
 	check_focus()
 	check_gun()
 	# Add the gravity.
@@ -102,7 +114,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta
 
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.

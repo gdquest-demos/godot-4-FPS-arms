@@ -14,6 +14,7 @@
 [node name="FpsController" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_tnmvy")
 main_focus_manager = ExtResource("2_wix1s")
+weapon_meter_range = 30.0
 
 [node name="FootStep" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
@@ -59,10 +60,10 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="GunAnchor" parent="ArmsView/SubViewport/Root/Arms" index="1"]
-transform = Transform3D(-0.990399, 0.0598887, 0.125364, 0.132434, 0.15072, 0.984124, 0.0397545, 0.981718, -0.161622, -0.194802, 0.0622591, 0.472295)
+transform = Transform3D(-0.992176, 0.0576787, 0.111439, 0.118404, 0.151697, 0.985797, 0.0398065, 0.981725, -0.161488, -0.194836, 0.057127, 0.472298)
 
 [node name="LoadAnchor" parent="ArmsView/SubViewport/Root/Arms" index="2"]
-transform = Transform3D(-0.994348, -0.0710942, -0.000843152, -0.0126735, -0.189102, 0.991368, -0.0898107, 0.97691, 0.167069, -0.118655, 0.0549489, 0.493914)
+transform = Transform3D(-0.99409, -0.0686701, -0.0149229, -0.0265464, -0.190131, 0.991265, -0.0898777, 0.976902, 0.166791, -0.118596, 0.050863, 0.493937)
 
 [node name="AnimationTree" parent="ArmsView" index="1"]
 parameters/AddSteps/add_amount = 0
