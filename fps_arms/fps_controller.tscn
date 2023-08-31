@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://don4817u8figv"]
+[gd_scene load_steps=9 format=3 uid="uid://don4817u8figv"]
 
 [ext_resource type="Script" path="res://fps_arms/fps_controller.gd" id="1_tnmvy"]
 [ext_resource type="PackedScene" uid="uid://b8i8vajkg00s0" path="res://fps_arms/arms_view.tscn" id="1_xwcgv"]
@@ -6,13 +6,13 @@
 [ext_resource type="Resource" uid="uid://c4lm8ngbupt2v" path="res://resources/main_focus_manager.tres" id="2_wix1s"]
 [ext_resource type="AudioStream" uid="uid://ditbnksbcilw2" path="res://assets/sounds/footstep_wood_001.ogg" id="3_22f4o"]
 [ext_resource type="AudioStream" uid="uid://bxix0mwm07si6" path="res://assets/sounds/pepSound2.ogg" id="3_tvps0"]
+[ext_resource type="Script" path="res://fps_arms/focus_cast.gd" id="6_wo1kx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rprq0"]
 
 [node name="FpsController" type="CharacterBody3D" groups=["player"]]
 floor_constant_speed = true
 script = ExtResource("1_tnmvy")
-main_focus_manager = ExtResource("2_wix1s")
 weapon_meter_range = 30.0
 
 [node name="FootStep" type="AudioStreamPlayer" parent="."]
@@ -51,22 +51,8 @@ remote_path = NodePath("../../../ArmsView/SubViewport/Root")
 unique_name_in_owner = true
 target_position = Vector3(0, 0, -20)
 collide_with_areas = true
+script = ExtResource("6_wo1kx")
+main_focus_manager = ExtResource("2_wix1s")
 
 [node name="ArmsView" parent="." instance=ExtResource("1_xwcgv")]
 unique_name_in_owner = true
-
-[node name="Root" parent="ArmsView/SubViewport" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
-
-[node name="GunAnchor" parent="ArmsView/SubViewport/Root/Arms" index="1"]
-transform = Transform3D(-0.990973, 0.0596214, 0.120078, 0.127953, 0.153247, 0.979869, 0.0400195, 0.986388, -0.159492, -0.195018, 0.061522, 0.47324)
-
-[node name="LoadAnchor" parent="ArmsView/SubViewport/Root/Arms" index="2"]
-transform = Transform3D(-0.996175, -0.0850008, -0.0202757, -0.00524451, -0.173452, 0.984828, -0.087228, 0.981168, 0.172342, -0.119295, 0.0550957, 0.494803)
-
-[node name="AnimationTree" parent="ArmsView" index="1"]
-parameters/AddSteps/add_amount = 0
-
-[editable path="ArmsView"]
-[editable path="ArmsView/SubViewport/Root/Arms/GunAnchor/GunOffset/SmallLaserPistol"]
-[editable path="ArmsView/SubViewport/Root/Arms/FPSArms"]

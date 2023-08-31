@@ -7,9 +7,6 @@ extends CharacterBody3D
 ## Define how fast or slow the character can accelerate
 @export_range(1.0, 10.0, 0.1) var BASE_ACCELERATION_SPEED = 8.0
 
-
-@export var main_focus_manager : FocusManager
-
 @onready var focus_cast : RayCast3D = %FocusCast
 @onready var camera = %Camera3D
 @onready var arms_view = %ArmsView
@@ -64,14 +61,6 @@ func get_gun_end_position():
 	var screen_pos = arms_view.camera.unproject_position(arms_view.gun_end.global_position)
 	return (camera.project_position(screen_pos, depth))
 
-func get_focus_collision():
-	if !focus_cast.is_colliding(): return {}
-	return {
-		"collider": focus_cast.get_collider(),
-		"position": focus_cast.get_collision_point(),
-		"normal": focus_cast.get_collision_normal()
-	}
-
 func check_gun():
 	var shoot_time_diff = Time.get_ticks_msec() - last_firing_time
 	var busy = arms_view.is_reloading or !(shoot_time_diff > 200)
@@ -95,19 +84,8 @@ func check_gun():
 				-camera.transform.basis.z,
 				get_gun_end_position(),
 				weapon_meter_range,
-				get_focus_collision()
+				focus_cast.get_focus_collision()
 			)
-
-var focused_node = null
-
-func check_focus():
-	var current_focus_node = focus_cast.get_collider()
-	if focused_node == current_focus_node: return
-	var last_focused_node = focused_node
-	focused_node = current_focus_node
-	if is_instance_valid(last_focused_node):
-		main_focus_manager.blur(last_focused_node)
-	main_focus_manager.focus(current_focus_node)
 	
 func apply_acceleration(direction : Vector2, acceleration_factor : float, delta : float):
 	var a = Vector2(velocity.x, velocity.z).move_toward(direction * SPEED, SPEED * acceleration_factor * BASE_ACCELERATION_SPEED * delta)
@@ -121,7 +99,6 @@ func apply_drag(amount : float, delta : float):
 	
 func _physics_process(delta):
 	check_look_motion(delta)
-	check_focus()
 	check_gun()
 	# Add the gravity.
 	if not is_on_floor():
