@@ -14,8 +14,8 @@ extends SubViewportContainer
 var is_reloading : bool = false
 var is_walking : bool = false : set = set_is_walking
 
-var vel_x = 0
-var vel_y = 0
+var vel_y = 0.0
+var angular_velocity = Vector3.ZERO
 
 signal footstep
 
@@ -24,6 +24,7 @@ func _ready():
 			if animation_name == "ReloadMag":
 				is_reloading = false
 				)
+	
 func copy_pos_rot(pos, rot):
 	previous_pos = pos
 	previous_rot = rot
@@ -50,16 +51,28 @@ func reload():
 	animation_tree.set("parameters/ReloadShot/request", true)
 	
 func _process(delta):
-	vel_y += previous_rot.y - root.rotation.y
-	vel_y = lerp_angle(vel_y, 0.0, 20.0 * delta)
+	var current_pos = root.global_position
+	var current_rot = root.rotation
 	
-	vel_x += (previous_rot.x - root.rotation.x)
-	vel_x += (previous_pos.y - root.global_position.y)
-	vel_x = lerp_angle(vel_x, 0.0, 20.0 * delta)
+	angular_velocity += Vector3(
+		wrap_angle(previous_rot.x, current_rot.x) * 20.0 * delta,
+		wrap_angle(previous_rot.y, current_rot.y) * 20.0 * delta,
+		0.0
+	)
 	
-	fps_arms.rotation.x = -vel_x
-	fps_arms.rotation.y = vel_y
-	fps_arms.rotation.x = max(fps_arms.rotation.x, -deg_to_rad(8.0))
-
+	vel_y += (previous_pos.y - current_pos.y) * 20.0 * delta
+	
+	var max_x_angle = deg_to_rad(8.0)
+	var max_y_angle = deg_to_rad(15.0)
+	
+	fps_arms.rotation.x = clamp(-(angular_velocity.x + vel_y), -max_x_angle, max_x_angle)
+	fps_arms.rotation.y = clamp(angular_velocity.y, -max_y_angle, max_y_angle)
+	
+	angular_velocity = angular_velocity.slerp(Vector3.ZERO, 10.0 * delta)
+	vel_y = lerpf(vel_y, 0.0, 10.0 * delta)
+	
 	previous_pos = root.global_position
 	previous_rot = root.rotation
+
+func wrap_angle(from, to) -> float:
+	return fposmod(from - to + PI, PI*2) - PI
