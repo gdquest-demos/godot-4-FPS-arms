@@ -8517,7 +8517,7 @@ fadeout_time = 0.1
 animation = &"custom_library/footstep"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_4dyah"]
-graph_offset = Vector2(-244.711, -90.6529)
+graph_offset = Vector2(-469, -23)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_wmrlq")
 nodes/Add2/position = Vector2(-40, 380)
 nodes/AddSteps/node = SubResource("AnimationNodeAdd2_8wq0x")
@@ -8576,7 +8576,7 @@ fov = 35.0
 far = 4.0
 
 [node name="GunAnchor" type="BoneAttachment3D" parent="SubViewport/Root/Arms"]
-transform = Transform3D(-0.990521, 0.0601536, 0.123487, 0.1314, 0.153039, 0.979445, 0.0400188, 0.986388, -0.159493, -0.195012, 0.0567008, 0.473239)
+transform = Transform3D(-0.990929, 0.0596739, 0.120412, 0.128291, 0.153228, 0.979828, 0.0400196, 0.986387, -0.159494, -0.195017, 0.0571316, 0.473239)
 bone_name = "DEF-hand.R"
 bone_idx = 30
 use_external_skeleton = true
@@ -8597,7 +8597,7 @@ unique_name_in_owner = true
 transform = Transform3D(0.999985, 0.000805389, 0.00497244, -0.00080435, 0.999999, -0.000203013, -0.00497257, 0.000200033, 0.999987, 0, 0.129, 0.04)
 
 [node name="LoadAnchor" type="BoneAttachment3D" parent="SubViewport/Root/Arms"]
-transform = Transform3D(-0.996187, -0.0856054, -0.0168478, -0.00177717, -0.173154, 0.984893, -0.0872294, 0.981167, 0.172341, -0.119312, 0.0500106, 0.494803)
+transform = Transform3D(-0.996176, -0.0850611, -0.0199402, -0.00490488, -0.173422, 0.984836, -0.0872295, 0.981167, 0.172341, -0.119297, 0.0506793, 0.494803)
 visible = false
 bone_name = "DEF-hand.L"
 bone_idx = 5
@@ -8781,7 +8781,7 @@ tree_root = SubResource("AnimationNodeBlendTree_4dyah")
 anim_player = NodePath("../SubViewport/Root/Arms/FPSArms/AnimationPlayer")
 active = true
 parameters/Add2/add_amount = 1.0
-parameters/AddSteps/add_amount = 1.0
+parameters/AddSteps/add_amount = 0.0
 parameters/FireShot/active = false
 parameters/FireShot/internal_active = false
 parameters/FireShot/request = 0
