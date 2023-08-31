@@ -24,8 +24,8 @@ func on_player_shoot(origin : Vector3, normal : Vector3, gun_end_position : Vect
 	laser_sound.play()
 
 	if collide: end_position = collision.position
-	var duration = end_position.distance_to(gun_end_position) / weapon_range
-	duration *= 0.2
+	var projectile_speed = 50.0
+	var duration = end_position.distance_to(gun_end_position) / projectile_speed
 	
 	var projectile = projectile_scene.instantiate()
 	projectile.position = gun_end_position
