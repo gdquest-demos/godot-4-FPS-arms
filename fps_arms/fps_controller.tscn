@@ -10,6 +10,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rprq0"]
 
 [node name="FpsController" type="CharacterBody3D" groups=["player"]]
+floor_constant_speed = true
 script = ExtResource("1_tnmvy")
 main_focus_manager = ExtResource("2_wix1s")
 weapon_meter_range = 30.0
@@ -58,13 +59,10 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="GunAnchor" parent="ArmsView/SubViewport/Root/Arms" index="1"]
-transform = Transform3D(-0.99206, 0.0582701, 0.111451, 0.119227, 0.153766, 0.980888, 0.0400191, 0.986387, -0.159492, -0.19503, 0.0603777, 0.473239)
+transform = Transform3D(-0.990973, 0.0596214, 0.120078, 0.127953, 0.153247, 0.979869, 0.0400195, 0.986388, -0.159492, -0.195018, 0.061522, 0.47324)
 
 [node name="LoadAnchor" parent="ArmsView/SubViewport/Root/Arms" index="2"]
-transform = Transform3D(-0.99609, -0.0834723, -0.0289414, -0.0140104, -0.174193, 0.984612, -0.0872292, 0.981167, 0.172343, -0.119254, 0.0546173, 0.494804)
-
-[node name="Skeleton3D" parent="ArmsView/SubViewport/Root/Arms/FPSArms/Rig" index="0"]
-bones/10/scale = Vector3(1, 1, 1)
+transform = Transform3D(-0.996175, -0.0850008, -0.0202757, -0.00524451, -0.173452, 0.984828, -0.087228, 0.981168, 0.172342, -0.119295, 0.0550957, 0.494803)
 
 [node name="AnimationTree" parent="ArmsView" index="1"]
 parameters/AddSteps/add_amount = 0

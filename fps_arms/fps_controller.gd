@@ -1,8 +1,12 @@
 extends CharacterBody3D
 
+## Default walk speed
+@export_range(1.0, 10.0, 0.1) var SPEED = 5.0
+## Default jump speed
+@export_range(1.0, 10.0, 0.1) var JUMP_VELOCITY = 4.5
+## Define how fast or slow the character can accelerate
+@export_range(1.0, 10.0, 0.1) var BASE_ACCELERATION_SPEED = 8.0
 
-const SPEED = 5.0
-const JUMP_VELOCITY = 4.5
 
 @export var main_focus_manager : FocusManager
 
@@ -105,6 +109,16 @@ func check_focus():
 		main_focus_manager.blur(last_focused_node)
 	main_focus_manager.focus(current_focus_node)
 	
+func apply_acceleration(direction : Vector2, acceleration_factor : float, delta : float):
+	var a = Vector2(velocity.x, velocity.z).move_toward(direction * SPEED, SPEED * acceleration_factor * BASE_ACCELERATION_SPEED * delta)
+	velocity.x = a.x
+	velocity.z = a.y
+	
+func apply_drag(amount : float, delta : float):
+	var d = velocity.move_toward(Vector3.ZERO, SPEED * amount * delta)
+	velocity.x = d.x
+	velocity.z = d.z
+	
 func _physics_process(delta):
 	check_look_motion(delta)
 	check_focus()
@@ -116,19 +130,12 @@ func _physics_process(delta):
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+		
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction = input_dir.rotated(-camera.rotation.y)
-	if direction:
-		var a = Vector2(velocity.x, velocity.z).lerp(direction * SPEED, SPEED * 0.1)
-		velocity.x = a.x
-		velocity.z = a.y
-	else:
-		var d = velocity.lerp(Vector3.ZERO, SPEED * 0.05)
-		velocity.x = d.x
-		velocity.z = d.z
+	
+	if direction.length() != 0.0: apply_acceleration(direction, 1.0 if is_on_floor() else 0.2, delta)
+	else: apply_drag(4.0 if is_on_floor() else 2.0, delta)
 		
 	var in_air = !is_on_floor()
 	var fall_velocity = velocity.y
