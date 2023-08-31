@@ -134,13 +134,16 @@ transform = Transform3D(0.707106, -0.664463, 0.241845, 0, 0.34202, 0.939692, -0.
 light_energy = 1.2
 shadow_enabled = true
 
+[node name="Target" parent="World3D" instance=ExtResource("16_mf2ep")]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 8, 6, -4)
+
 [node name="Terrain" type="CSGCombiner3D" parent="World3D"]
 material_override = SubResource("StandardMaterial3D_31dii")
 use_collision = true
 metadata/_edit_lock_ = true
 
 [node name="CSGBox3D10" type="CSGBox3D" parent="World3D/Terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -2, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, -2, 4)
 size = Vector3(12, 4, 10)
 
 [node name="CSGBox3D11" type="CSGBox3D" parent="World3D/Terrain"]
@@ -148,8 +151,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -11)
 size = Vector3(12, 4, 8)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="World3D/Terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, 3.5)
-size = Vector3(6, 2, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.7, 3.5)
+size = Vector3(4, 0.6, 5)
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="World3D/Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 3.5)
+size = Vector3(2, 2, 5)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="World3D/Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, 2)
@@ -190,9 +197,9 @@ polygon = PackedVector2Array(-0.5, 0, 2.5, 2, 2.5, 0)
 depth = 2.0
 
 [node name="CSGPolygon3D2" type="CSGPolygon3D" parent="World3D/Terrain"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2, 6)
 polygon = PackedVector2Array(-0.5, 0, 2.5, 2, 2.5, 0)
-depth = 2.0
+depth = 5.0
 
 [node name="CSGPolygon3D3" type="CSGPolygon3D" parent="World3D/Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2, -5)
@@ -309,6 +316,3 @@ offset_top = -72.0
 offset_right = 46.0
 offset_bottom = -32.0
 grow_vertical = 0
-
-[node name="Target" parent="." instance=ExtResource("16_mf2ep")]
-transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 8, 6, -4)

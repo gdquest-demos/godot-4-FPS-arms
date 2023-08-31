@@ -13,6 +13,11 @@ extends CharacterBody3D
 @onready var foot_step = %FootStep
 @onready var landing = %Landing
 @onready var no_ammo = %NoAmmo
+@onready var collision_shape : CollisionShape3D = %CollisionShape3D
+@onready var capsule_shape : CapsuleShape3D = collision_shape.shape
+@onready var neck : Node3D = %Neck
+@onready var crouch_ceiling_cast : ShapeCast3D = %CrouchCeilingCast
+
 
 @onready var weapon_data = preload("res://resources/laser_gun_data.tres")
 
@@ -24,6 +29,8 @@ var last_firing_time = 0
 
 var look_direction = Vector2.ZERO
 
+var is_crouching : bool = false : set = _set_is_crouching
+
 signal shoot(origin : Vector3, normal : Vector3, gun_end_position : Vector3, weapon_range : float, collision : Dictionary)
 
 func _ready():
@@ -32,9 +39,23 @@ func _ready():
 		)
 	arms_view.copy_pos_rot(camera.global_position, camera.rotation)
 	arms_view.connect("footstep", on_footstep)
+	focus_cast.add_exception(self)
 	focus_cast.target_position.z = -weapon_meter_range
+
+func _set_is_crouching(value : bool):
+	if is_crouching == value: return
+	if !value && crouch_ceiling_cast.is_colliding(): return
+
+	is_crouching = value
+
+	collision_shape.position.y = 0.5 if is_crouching else 1.0
+	capsule_shape.height = 1.0 if is_crouching else 2.0
+	
+	var t = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	t.tween_property(neck, "position:y", 1.0 if is_crouching else 1.6, 0.25)
 	
 func on_footstep():
+	if is_crouching: return
 	foot_step.pitch_scale = randfn(1.0, 0.05)
 	foot_step.play()
 
@@ -87,8 +108,9 @@ func check_gun():
 				focus_cast.get_focus_collision()
 			)
 	
-func apply_acceleration(direction : Vector2, acceleration_factor : float, delta : float):
-	var a = Vector2(velocity.x, velocity.z).move_toward(direction * SPEED, SPEED * acceleration_factor * BASE_ACCELERATION_SPEED * delta)
+func apply_acceleration(direction : Vector2, speed_percent : float, acceleration_factor : float, delta : float):
+	var effective_speed = SPEED * speed_percent
+	var a = Vector2(velocity.x, velocity.z).move_toward(direction * effective_speed, SPEED * acceleration_factor * BASE_ACCELERATION_SPEED * delta)
 	velocity.x = a.x
 	velocity.z = a.y
 	
@@ -100,18 +122,24 @@ func apply_drag(amount : float, delta : float):
 func _physics_process(delta):
 	check_look_motion(delta)
 	check_gun()
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
+	
+	# Handle crouch.
+	if is_on_floor(): is_crouching = Input.is_action_pressed("crouching")
+	
 	# Handle Jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor() and !is_crouching:
 		velocity.y = JUMP_VELOCITY
 		
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction = input_dir.rotated(-camera.rotation.y)
 	
-	if direction.length() != 0.0: apply_acceleration(direction, 1.0 if is_on_floor() else 0.2, delta)
+	if direction.length() != 0.0:
+		var walk_speed_percent = 0.5 if is_crouching else 1.0
+		apply_acceleration(direction, walk_speed_percent, 1.0 if is_on_floor() else 0.2, delta)
 	else: apply_drag(4.0 if is_on_floor() else 2.0, delta)
 		
 	var in_air = !is_on_floor()
