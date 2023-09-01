@@ -1,10 +1,9 @@
-[gd_scene load_steps=35 format=3 uid="uid://b8i8vajkg00s0"]
+[gd_scene load_steps=34 format=3 uid="uid://b8i8vajkg00s0"]
 
 [ext_resource type="Script" path="res://fps_arms/arms_view.gd" id="1_e15a3"]
 [ext_resource type="PackedScene" uid="uid://cl2ytb52ylubc" path="res://assets/small_laser_pistol.glb" id="2_1jmvq"]
 [ext_resource type="PackedScene" uid="uid://caxt51h474pab" path="res://assets/fps_arms.glb" id="2_g8snw"]
 [ext_resource type="Material" uid="uid://dlnmdgy8fd47u" path="res://fps_arms/materials/arms_mat.tres" id="3_jikf0"]
-[ext_resource type="Material" uid="uid://b01cwao6pymvk" path="res://fps_arms/materials/gloves_mat.tres" id="4_jyjh0"]
 [ext_resource type="AnimationLibrary" uid="uid://dw5ae8js8d8wi" path="res://fps_arms/custom_animations/custom_library.res" id="5_6ipce"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wvvvv"]
@@ -8517,7 +8516,6 @@ fadeout_time = 0.1
 animation = &"custom_library/footstep"
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_4dyah"]
-graph_offset = Vector2(-469, -23)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_wmrlq")
 nodes/Add2/position = Vector2(-40, 380)
 nodes/AddSteps/node = SubResource("AnimationNodeAdd2_8wq0x")
@@ -8576,7 +8574,7 @@ fov = 35.0
 far = 4.0
 
 [node name="GunAnchor" type="BoneAttachment3D" parent="SubViewport/Root/Arms"]
-transform = Transform3D(-0.990929, 0.0596739, 0.120412, 0.128291, 0.153228, 0.979828, 0.0400196, 0.986387, -0.159494, -0.195017, 0.0571316, 0.473239)
+transform = Transform3D(-0.990598, 0.0600647, 0.122916, 0.130822, 0.153075, 0.979517, 0.040019, 0.986387, -0.159494, -0.195013, 0.0567915, 0.473239)
 bone_name = "DEF-hand.R"
 bone_idx = 30
 use_external_skeleton = true
@@ -8597,7 +8595,7 @@ unique_name_in_owner = true
 transform = Transform3D(0.999985, 0.000805389, 0.00497244, -0.00080435, 0.999999, -0.000203013, -0.00497257, 0.000200033, 0.999987, 0, 0.129, 0.04)
 
 [node name="LoadAnchor" type="BoneAttachment3D" parent="SubViewport/Root/Arms"]
-transform = Transform3D(-0.996176, -0.0850611, -0.0199402, -0.00490488, -0.173422, 0.984836, -0.0872295, 0.981167, 0.172341, -0.119297, 0.0506793, 0.494803)
+transform = Transform3D(-0.996186, -0.0855032, -0.0174224, -0.00235854, -0.173204, 0.984883, -0.0872284, 0.981167, 0.172342, -0.119309, 0.0501451, 0.494803)
 visible = false
 bone_name = "DEF-hand.L"
 bone_idx = 5
@@ -8767,7 +8765,6 @@ bones/49/rotation = Quaternion(0.308765, 1.07628e-05, 4.24535e-05, 0.951138)
 [node name="arms" parent="SubViewport/Root/Arms/FPSArms/Rig/Skeleton3D" index="0"]
 layers = 2
 surface_material_override/0 = ExtResource("3_jikf0")
-surface_material_override/1 = ExtResource("4_jyjh0")
 
 [node name="AnimationPlayer" parent="SubViewport/Root/Arms/FPSArms" index="1"]
 libraries = {

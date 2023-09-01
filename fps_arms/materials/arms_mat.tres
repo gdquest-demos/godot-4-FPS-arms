@@ -5,6 +5,7 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_vs23t")
-shader_parameter/skin_color = Color(0.905882, 0.529412, 0.85098, 1)
+shader_parameter/skin_color = Color(0.576471, 0.321569, 0.231373, 1)
 shader_parameter/extremity_color = Color(0.952941, 0.603922, 0.462745, 1)
-shader_parameter/nails_color = Color(0.839216, 0.498039, 0.694118, 1)
+shader_parameter/nails_color = Color(0.670588, 0.439216, 0.356863, 1)
+shader_parameter/gloves_color = Color(0.592157, 0.364706, 0.835294, 1)
