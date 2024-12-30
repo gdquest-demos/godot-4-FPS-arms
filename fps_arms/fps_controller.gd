@@ -56,8 +56,6 @@ func set_is_crouching(value: bool) -> void:
 	crouch_tween.tween_property(_neck, "position:y", 1.0 if is_crouching else 1.6, 0.25)
 
 
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
