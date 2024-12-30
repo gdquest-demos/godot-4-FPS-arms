@@ -15,7 +15,6 @@
 [node name="FpsController" type="CharacterBody3D" groups=["player"]]
 floor_constant_speed = true
 script = ExtResource("1_tnmvy")
-weapon_meter_range = 30.0
 
 [node name="FootStep" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true

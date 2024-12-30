@@ -82,9 +82,9 @@ curve = SubResource("Curve_dxiya")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ux3wj"]
 emission_shape = 3
 emission_box_extents = Vector3(20, 10, 20)
-gravity = Vector3(0, 0.25, 0)
 initial_velocity_min = 0.1
 initial_velocity_max = 0.25
+gravity = Vector3(0, 0.25, 0)
 scale_min = 0.1
 scale_max = 0.1
 scale_curve = SubResource("CurveTexture_asglm")

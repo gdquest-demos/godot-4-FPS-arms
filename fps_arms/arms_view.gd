@@ -1,12 +1,12 @@
-extends SubViewportContainer
+class_name ArmsViewport extends SubViewportContainer
 
-@onready var camera = %Camera3D
+@onready var camera: Camera3D = %Camera3D
 @onready var animation_tree = %AnimationTree
 @onready var main_state_machine : AnimationNodeStateMachinePlayback = animation_tree.get("parameters/MainState/playback")
 @onready var fps_arms = %FPSArms
 @onready var arms = %Arms
 @onready var root = %Root
-@onready var gun_end = %GunEnd
+@onready var gun_end: Node3D = %GunEnd
 
 @onready var previous_pos = Vector3.ZERO
 @onready var previous_rot = Vector3.ZERO

@@ -8539,7 +8539,7 @@ nodes/ShakeShot/position = Vector2(340, 240)
 nodes/footstep/node = SubResource("AnimationNodeAnimation_hccaf")
 nodes/footstep/position = Vector2(280, 0)
 nodes/output/position = Vector2(660, 80)
-node_connections = [&"output", 0, &"AddSteps", &"Add2", 0, &"Reload", &"Add2", 1, &"Animation", &"AddSteps", 0, &"ShakeShot", &"AddSteps", 1, &"footstep", &"FireShot", 0, &"MainState", &"FireShot", 1, &"Fire", &"ReloadShot", 0, &"FireShot", &"ReloadShot", 1, &"Add2", &"ShakeShot", 0, &"ReloadShot", &"ShakeShot", 1, &"Shake"]
+node_connections = [&"Add2", 0, &"Reload", &"Add2", 1, &"Animation", &"AddSteps", 0, &"ShakeShot", &"AddSteps", 1, &"footstep", &"FireShot", 0, &"MainState", &"FireShot", 1, &"Fire", &"ReloadShot", 0, &"FireShot", &"ReloadShot", 1, &"Add2", &"ShakeShot", 0, &"ReloadShot", &"ShakeShot", 1, &"Shake", &"output", 0, &"AddSteps"]
 
 [node name="ArmsView" type="SubViewportContainer"]
 anchors_preset = 15
@@ -8574,7 +8574,7 @@ fov = 35.0
 far = 4.0
 
 [node name="GunAnchor" type="BoneAttachment3D" parent="SubViewport/Root/Arms"]
-transform = Transform3D(-0.990598, 0.0600647, 0.122916, 0.130822, 0.153075, 0.979517, 0.040019, 0.986387, -0.159494, -0.195013, 0.0567915, 0.473239)
+transform = Transform3D(-0.991536, 0.058933, 0.115682, 0.123507, 0.153514, 0.980398, 0.0400189, 0.986387, -0.159492, -0.195025, 0.055323, 0.473238)
 bone_name = "DEF-hand.R"
 bone_idx = 30
 use_external_skeleton = true
@@ -8595,7 +8595,7 @@ unique_name_in_owner = true
 transform = Transform3D(0.999985, 0.000805389, 0.00497244, -0.00080435, 0.999999, -0.000203013, -0.00497257, 0.000200033, 0.999987, 0, 0.129, 0.04)
 
 [node name="LoadAnchor" type="BoneAttachment3D" parent="SubViewport/Root/Arms"]
-transform = Transform3D(-0.996186, -0.0855032, -0.0174224, -0.00235854, -0.173204, 0.984883, -0.0872284, 0.981167, 0.172342, -0.119309, 0.0501451, 0.494803)
+transform = Transform3D(-0.996141, -0.0842228, -0.0246921, -0.00971191, -0.173831, 0.984727, -0.0872288, 0.981167, 0.172342, -0.119274, 0.0492361, 0.494804)
 visible = false
 bone_name = "DEF-hand.L"
 bone_idx = 5
@@ -8640,7 +8640,6 @@ bones/7/rotation = Quaternion(-0.0839063, 0.888096, -0.449798, 0.0439069)
 bones/7/scale = Vector3(1, 1, 1)
 bones/8/position = Vector3(-1.694e-08, 0.0428274, -7.3652e-08)
 bones/8/rotation = Quaternion(0.397635, 0.000146955, -5.63419e-05, 0.917544)
-bones/8/scale = Vector3(1, 1, 1)
 bones/9/position = Vector3(-2.08736e-08, 0.0261567, -1.1256e-07)
 bones/9/rotation = Quaternion(0.375243, 3.78616e-05, -1.31794e-05, 0.926927)
 bones/9/scale = Vector3(1, 1, 1)
@@ -8774,9 +8773,9 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 unique_name_in_owner = true
+root_node = NodePath("%FPSArms")
 tree_root = SubResource("AnimationNodeBlendTree_4dyah")
 anim_player = NodePath("../SubViewport/Root/Arms/FPSArms/AnimationPlayer")
-active = true
 parameters/Add2/add_amount = 1.0
 parameters/AddSteps/add_amount = 0.0
 parameters/FireShot/active = false
