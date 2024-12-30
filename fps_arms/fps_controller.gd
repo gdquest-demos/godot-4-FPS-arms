@@ -30,7 +30,7 @@ func _ready() -> void:
 	weapon_data.connect("reloaded", func():
 		_arms_viewport.reload()
 	)
-	_arms_viewport.copy_pos_rot(_camera.global_position, _camera.rotation)
+	_arms_viewport.apply_position_and_rotation(_camera.global_transform)
 	_arms_viewport.footstep.connect(func on_character_stepped() -> void:
 			if is_crouching:
 				return
